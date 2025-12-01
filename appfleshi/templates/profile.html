@@ -1,7 +1,7 @@
 {% extends "homepage.html" %}
 
 {% block title %}
-    Fléshi - Perfil
+    Fléshi - Perfilss
 {% endblock %}
 
 {% block body %}
@@ -10,11 +10,21 @@
             Perfil do Usuário:  {{ user.username }}
         </h1>
 
-        <a href=" {{ url_for ('logout') }}">
-            Sair
-        </a>
+        {% if form %}
+            <form method="post" enctype="multipart/form-data">
+                {{ form.csrf_token }}
 
-        <img src="{{ url_for('static', filename='posts_photos/default.png') }}" alt="imagem">
+                {{ form.photo() }}
+                {{ form.submit() }}
+
+            </form>
+        {% endif %}
+
+        <a href=" {{ url_for ('logout') }}">Sair</a>
+
+        {% for photo in user.photos %}
+            <img src="{{ url_for('static', filename='posts_photos/default.png') }}" alt="imagem">
+        {% endfor %}
 
     </body>
 {% endblock %}

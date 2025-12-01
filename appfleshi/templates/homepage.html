@@ -1,19 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>
-        {% block title %}
-            Fléshi - Página Inicial
+        {% block title  %}
+            Fléshi - Página inicial
         {% endblock %}
     </title>
 </head>
 {% block body %}
-    <body>
+<body>
+    <h1>
+        Fléshi - Página inicial
+    </h1>
 
-        <h1>Fléshi - Página Inicial</h1>
+    {% block form %}
+         <form method="post">
+            {{ form.csrf_token }}
+            {{ form.email.label() }}
+            {{ form.email() }}
 
-    </body>
+            {{ form.password.label() }}
+            {{ form.password() }}
+
+            {{ form.submit() }}
+        </form>
+    {% endblock %}
+</body>
 {% endblock %}
-
 </html>

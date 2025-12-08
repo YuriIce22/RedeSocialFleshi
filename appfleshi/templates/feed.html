@@ -8,6 +8,9 @@
     {% include "navbar.html" %}
     <h1>feed principal</h1>
 
+    <a href="{{ url_for('feed', 1 }}">Mais Recentes</a>
+    <a href="{{ url_for('feed', 2 }}">Mais Antigas</a>
+
     {% for photo in photos %}
         <a href="{{ url_for('profile', user_id=photo.user_id) }}">
             <img src="{{ url_for('static', filename='posts_photos/'~ photo.file_name) }}" alt="imagem">

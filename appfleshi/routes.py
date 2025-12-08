@@ -56,5 +56,11 @@ def logout():
 @app.route("/feed")
 @login_required
 def feed():
-    photos = Photo.query.order_by(Photo.upload_date.desc()).all()
-    return render_template("feed.html", photos=photos)
+
+
+    if valor_botao == 1:
+        photos = Photo.query.order_by(Photo.upload_date.desc()).all()
+        return render_template("feed.html", photos=photos)
+    else:
+        photos = Photo.query.order_by(Photo.upload_date.asc()).all()
+        return render_template("feed.html", photos=photos)

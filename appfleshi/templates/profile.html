@@ -6,24 +6,76 @@
 
 {% block body %}
     <body>
+
+    <style>
+        body{
+            overflow-x: hidden;
+        }
+        h1{
+            padding-top: 25px;
+        }
+        .imagemFeed{
+            width: 300px;
+            height: 300px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+        .imagemFeed:hover{
+             transform: scale(1.05);
+             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .main-feed{
+            display: flex;
+            justify-content: start;
+            flex-wrap: wrap;
+            padding-bottom: 50px;
+            padding-top: 20px;
+        }
+        .profile-main{
+            background: whitesmoke;
+            margin-top: 30px;
+            height: 80%;
+            width: 70%;
+            display: block;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                2px 2px 4px rgba(117, 117, 117, 0.8),
+                -2px -2px 4px rgba(117, 117, 117, 0.8);
+        }
+        }
+    </style>
+
     {% include "navbar.html" %}
-        <h1>
-            Perfil do Usuário:  {{ user.username }}
-        </h1>
 
-        {% if form %}
-            <form method="post" enctype="multipart/form-data">
-                {{ form.csrf_token }}
+    <div class="profile-main">
+            <h1>
+                Perfil do Usuário
+                <p>{{ user.username }}</p>
+            </h1>
 
-                {{ form.photo() }}
-                {{ form.submit() }}
+            {% if form %}
+                <form method="post" enctype="multipart/form-data">
+                    {{ form.csrf_token }}
 
-            </form>
-        {% endif %}
+                    {{ form.photo() }}
+                    {{ form.submit() }}
 
-        {% for photo in user.photos %}
-            <img src="{{ url_for('static', filename='posts_photos/'~ photo.file_name) }}" alt="imagem">
-        {% endfor %}
+                </form>
+            {% endif %}
 
-    </body>
+            <div class="main-feed">
+                {% for photo in user.photos %}
+                    <img class="imagemFeed" src="{{ url_for('static', filename='posts_photos/'~ photo.file_name) }}" alt="imagem">
+                {% endfor %}
+            </div>
+        </body>
+    </div>
+
 {% endblock %}

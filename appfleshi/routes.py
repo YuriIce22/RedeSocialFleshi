@@ -13,7 +13,7 @@ def homepage():
         user = User.query.filter_by(email=login_form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, login_form.password.data):
             login_user(user)
-            return redirect(url_for('feed', user_id=user.id))
+            return redirect(url_for('feed', ordem="desc"))
     return render_template('homepage.html', form=login_form)
 
 @app.route('/profile/<user_id>', methods=['GET', 'POST'])
@@ -53,14 +53,13 @@ def logout():
     logout_user()
     return redirect(url_for('homepage'))
 
-@app.route("/feed")
+@app.route("/feed/<ordem>")
 @login_required
-def feed():
+def feed(ordem):
 
 
-    if valor_botao == 1:
+    if ordem == 'desc':
         photos = Photo.query.order_by(Photo.upload_date.desc()).all()
-        return render_template("feed.html", photos=photos)
-    else:
+    elif ordem == 'asc':
         photos = Photo.query.order_by(Photo.upload_date.asc()).all()
-        return render_template("feed.html", photos=photos)
+    return render_template("feed.html", photos=photos)

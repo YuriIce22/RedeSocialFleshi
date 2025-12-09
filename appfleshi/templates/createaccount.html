@@ -4,44 +4,62 @@
     Fléshi - Criar conta!
  {% endblock %}
 
- {% block form %}
-    <form method="post">
-        {{ form.csrf_token }}
 
-        <div>
-            {{ form.email.label() }}
-            {{ form.email(class="home-form-input") }}
+
+ <div class="main-container">
+
+     {% block form %}
+
+        <div class="main-form-create">
+                <form method="post">
+                    {{ form.csrf_token }}
+
+                    <div class="conjunto-campos">
+                        <div class="campos">
+                            {{ form.email.label() }}
+                            {{ form.email(class="home-form-input") }}
+                        </div>
+
+                            {% if form.email.errors %}
+                                {% for erro in form.email.errors %}
+                                    <p class="alert alert-danger">{{ erro }}</p>
+                                {% endfor %}
+                            {% endif %}
+
+                        <div class="campos">
+
+                            {{ form.username.label() }}
+                            {{ form.username(class="home-form-input") }}
+                        </div>
+
+                        {% if form.username.errors %}
+                                {% for erro in form.username.errors %}
+                                    <p class="alert alert-danger">{{ erro }}</p>
+                                {% endfor %}
+                            {% endif %}
+
+                        <div class="campos">
+                            {{ form.password.label() }}
+                            {{ form.password(class="home-form-input") }}
+                        </div>
+
+                        <div class="campos">
+                            {{ form.confirm_password.label() }}
+                            {{ form.confirm_password(class="home-form-input") }}
+                        </div>
+
+                    </div>
+
+                            {{ form.submit(class="btn-submit") }}
+
+
+
+                </form>
+             <a class="account-a" href="{{ url_for('homepage') }}">Tem uma conta? Faça login!</a>
+
         </div>
 
-            {% if form.email.errors %}
-                {% for erro in form.email.errors %}
-                    <p class="alert alert-danger">{{ erro }}</p>
-                {% endfor%}
-            {% endif %}
 
-        <div>
+     {% endblock %}
 
-            {{ form.username.label() }}
-            {{ form.username(class="home-form-input") }}
-        </div>
-
-        {% if form.username.errors %}
-                {% for erro in form.username.errors %}
-                    <p class="alert alert-danger">{{ erro }}</p>
-                {% endfor%}
-            {% endif %}
-
-        <div>
-            {{ form.password.label() }}
-            {{ form.password(class="home-form-input") }}
-        </div>
-
-        <div>
-            {{ form.confirm_password.label() }}
-            {{ form.confirm_password(class="home-form-input") }}
-        </div>
-
-            {{ form.submit(class="btn-submit") }}
-    </form>
- <a href="{{ url_for('homepage') }}">Tem uma conta? Faça login!</a>
- {% endblock %}
+ </div>

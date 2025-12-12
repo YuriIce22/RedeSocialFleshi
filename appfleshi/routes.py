@@ -21,18 +21,23 @@ def homepage():
 def profile(user_id):
     if int(user_id) == int(current_user.id):
         photo_form = PhotoForm()
+
         if photo_form.validate_on_submit():
             file = photo_form.photo.data
             secure_name = secure_filename(file.filename)
-            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config["UPLOAD_FOLDER"], secure_name)
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config["UPLOAD_FOLDER"],secure_name)
             file.save(path)
             photo = Photo(file_name=secure_name, user_id=current_user.id)
             database.session.add(photo)
             database.session.commit()
+
+            return redirect(url_for('profile', user_id=current_user.id))  # Redireciona para GET para evitar reenvio
+
         return render_template('profile.html', user=current_user, form=photo_form)
     else:
         user = User.query.get(int(user_id))
         return render_template('profile.html', user=user, form=None)
+
 
 @app.route('/createaccount', methods=['GET', 'POST'])
 def createaccount():

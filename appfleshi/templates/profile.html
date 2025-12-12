@@ -7,76 +7,100 @@
 {% block body %}
     <body>
 
-    <style>
-        body{
-            overflow-x: hidden;
-        }
-        h1{
-            padding-top: 25px;
-        }
-        .imagemFeed{
-            width: 300px;
-            height: 300px;
-            margin-top: 30px;
-            border-radius: 5px;
-            margin: 5px;
-        }
-        .imagemFeed:hover{
-             transform: scale(1.05);
-             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        .main-feed{
-            display: flex;
-            justify-content: start;
-            flex-wrap: wrap;
-            padding-bottom: 50px;
-            padding-top: 20px;
-        }
-        .profile-main{
-            background: whitesmoke;
-            margin-top: 30px;
-            height: 80%;
-            width: 70%;
-            display: block;
-            margin-top: 20px;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow:
-                2px 2px 4px rgba(117, 117, 117, 0.8),
-                -2px -2px 4px rgba(117, 117, 117, 0.8);
-        }
-        }
-    </style>
+        <style>
+            body{
+                overflow-x: hidden;
+            }
+            h1{
+                padding-top: 25px;
+            }
+            .imagemFeed{
+                width: 300px;
+                height: 300px;
+                margin-top: 35px;
+                border-radius: 5px;
+                margin: 5px;
+                margin-left: 25px;
+            }
+            .imagemFeed:hover{
+                 transform: scale(1.05);
+                 box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+            .main-feed{
+                display: flex;
+                justify-content: start;
+                flex-wrap: wrap;
+                padding-bottom: 50px;
+                padding-top: 20px;
+            }
+            .profile-main{
+                background: whitesmoke;
+                margin-top: 30px;
+                width: 70%;
+                display: block;
+                margin-top: 30px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 30px;
+                border-radius: 15px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                box-shadow:
+                    2px 2px 4px rgba(117, 117, 117, 0.8),
+                    -2px -2px 4px rgba(117, 117, 117, 0.8);
+            }
+            #submit{
+                padding: 10px;
+                border-radius: 5px;
+                width: 100px;
+                background: #c1121f;
+                color: white;
+            }
+            #submit:hover{
+                background: #780000;
+            }
+            #photo::file-selector-button{
+                padding: 10px;
+                border-radius: 5px;
+                width: 150px;
+                background: #c1121f;
+                color: white;
+                cursor: pointer;
+            }
+            #photo::file-selector-button:hover{
+                background: #780000;
+            }
+        </style>
 
-    {% include "navbar.html" %}
+        {% include "navbar.html" %}
 
-    <div class="profile-main">
-            <h1>
-                Perfil do Usuário
-                <p>{{ user.username }}</p>
-            </h1>
+        <div class="profile-main">
+                <h1>
+                    Perfil do Usuário
+                    <p>{{ user.username }}</p>
+                </h1>
 
-            {% if form %}
-                <form method="post" enctype="multipart/form-data">
-                    {{ form.csrf_token }}
+                {% if form %}
+                    <form method="post" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
 
-                    {{ form.photo() }}
-                    {{ form.submit() }}
+                        <div class="buttons">
+                            {{ form.photo(class="btn") }}
+                            {{ form.submit(class=btn) }}
+                        </div>
 
-                </form>
-            {% endif %}
+                    </form>
+                {% endif %}
 
-            <div class="main-feed">
-                {% for photo in user.photos %}
-                    <img class="imagemFeed" src="{{ url_for('static', filename='posts_photos/'~ photo.file_name) }}" alt="imagem">
-                {% endfor %}
-            </div>
-        </body>
-    </div>
+                <div class="main-feed">
+                    {% for photo in user.photos %}
+                        <img class="imagemFeed" src="{{ url_for('static', filename='posts_photos/'~ photo.file_name) }}" alt="imagem">
+                    {% endfor %}
+                </div>
+        </div>
+    </body>
+
 
 {% endblock %}
